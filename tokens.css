@@ -1,0 +1,95 @@
+/* design tokens */
+:root {
+  /* color - dark instrument panel, one cobalt signal */
+  --color-paper:        oklch(14.5% 0.014 255);
+  --color-paper-2:      oklch(18%   0.015 255);
+  --color-paper-3:      oklch(22.5% 0.016 255);
+  --color-rule:         oklch(27%   0.014 254);
+  --color-rule-2:       oklch(34%   0.016 254);
+  --color-neutral:      oklch(76%   0.014 252);
+  --color-muted:        oklch(67%   0.016 252);
+  --color-ink:          oklch(95%   0.006 250);
+  --color-ink-2:        oklch(87%   0.01  250);
+  --color-accent:       oklch(70%   0.15  256);
+  --color-accent-deep:  oklch(45%   0.16  256);
+  --color-accent-ink:   oklch(15%   0.02  258);
+  --color-focus:        oklch(70%   0.15  256);
+
+  /* cream - hover state on primary actions */
+  --color-cream:        oklch(95%   0.014 85);
+  --color-cream-ink:    oklch(18%   0.016 258);
+
+  /* elevated surfaces - analyzer card + band */
+  --color-graphite:     oklch(20%   0.016 258);
+  --color-graphite-2:   oklch(24%   0.016 258);
+  --color-graphite-3:   oklch(28.5% 0.016 258);
+  --color-graphite-veil: oklch(20% 0.016 258 / 0.55);
+  --color-rule-dark:    oklch(34%   0.014 258);
+  --color-ink-dark:     oklch(94%   0.006 250);
+  --color-muted-dark:   oklch(72%   0.012 252);
+  --color-accent-brt:   oklch(72%   0.14  256);
+  --color-accent-zone:  oklch(33%   0.10  256);
+
+  /* status (functional, never colour-alone) */
+  --color-error:        oklch(70% 0.17 25);
+  --color-error-dark:   oklch(72% 0.16 25);
+  --color-warn:         oklch(76% 0.13 85);
+  --color-warn-brt:     oklch(78% 0.13 85);
+
+  /* overlays + the one shadow */
+  --color-paper-veil:   oklch(14.5% 0.014 255 / 0.85);
+  --color-scrim:        oklch(10% 0.014 258 / 0.5);
+  --shadow-whisper:     0 1px 2px oklch(8% 0.014 258 / 0.4);
+
+  /* type - Space Grotesk display / IBM Plex Sans body / JetBrains Mono readouts */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body:    "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* scale - 1.25 major third on a 16px base */
+  --text-xs:   0.75rem;
+  --text-sm:   0.8125rem;
+  --text-base: 1rem;
+  --text-md:   1.25rem;
+  --text-lg:   1.5625rem;
+  --text-xl:   1.9531rem;
+  --text-2xl:  2.4414rem;
+  --text-display-s: clamp(1.9rem, 3vw + 0.5rem, 2.9rem);
+  --text-display:   clamp(2.5rem, 5vw + 0.5rem, 4.5rem);
+
+  /* space - 4pt scale */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  /* motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long:  420ms;
+
+  /* structure */
+  --rule-hair: 1px;
+  --radius-ctl:  6px;
+  --radius-card: 10px;
+  --page-gutter: clamp(1rem, 4vw, 2.5rem);
+  --page-max: 72rem;
+
+  /* z scale */
+  --z-base:     1;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-modal:    400;
+  --z-toast:    500;
+  --z-tooltip:  600;
+}
