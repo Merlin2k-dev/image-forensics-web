@@ -3,7 +3,7 @@
 
 "use strict";
 
-const API_BASE = ""; // "" = same origin; or e.g. "https://<space>.hf.space"
+const API_BASE = "https://merlin2k23-image-forensics.hf.space";
 
 let apiUp = false;
 (async () => {
