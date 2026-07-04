@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#101218">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://merlin2k23-image-forensics.hf.space; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <title>Image Forensics — a white-box AI-image detector</title>
 <meta name="description" content="Upload an image and get one of three verdicts — likely AI-generated, likely real, or inconclusive — with every measurement behind the answer shown in plain English. 27 hand-crafted features, logistic regression, no neural networks.">
@@ -12,8 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tokens.css?v=7">
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="tokens.css?v=9">
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 
@@ -51,7 +51,7 @@
 
     <div class="analyzer reveal" id="analyze" style="--i:2">
       <div class="analyzer__bar">
-        <span class="label">analysis · 27 features</span>
+        <span class="label">analysis · 27 features + watermark check</span>
         <span class="label" id="analyzer-state">ready</span>
       </div>
       <div class="analyzer__body" id="analyzer-body" aria-live="polite">
@@ -74,7 +74,7 @@
 
   <section class="wrap section--tight">
     <div class="stats tnum">
-      <div><b>27</b><span>hand-crafted measurements in the model</span></div>
+      <div><b>27&thinsp;+&thinsp;1</b><span>hand-crafted measurements, plus a watermark check</span></div>
       <div><b>18</b><span>feature families rejected by controls</span></div>
       <div><b>29</b><span>modern generators evaluated</span></div>
       <div><b>&lt;9%</b><span>real photos ever misflagged as AI</span></div>
@@ -144,6 +144,9 @@
                 <td>how the image responds to resampling round-trips</td></tr>
             <tr><th scope="row">self-consistency</th><td class="count">5</td>
                 <td>statistical agreement between neighboring patches</td></tr>
+            <tr><th scope="row">visible watermark</th><td class="count">+1</td>
+                <td>known generator stamps (Gemini’s diamond, Kling’s wordmark) matched at their
+                    documented corner positions on the full image</td></tr>
           </tbody>
         </table>
         <div class="prose">
@@ -151,6 +154,11 @@
              structure where generator artifacts live. Color statistics were implemented and tested too,
              as four separate feature families; every one of them turned out to fingerprint the source
              pipeline instead of the generator, and they were rejected.</p>
+          <p>One check stands apart from the statistics: known <strong>visible watermarks</strong>.
+             Some consumer apps stamp their images (Gemini’s diamond, Kling’s wordmark) at exact,
+             documented positions. Finding one settles the verdict on its own, because the thresholds
+             are calibrated so that no clean photo in the reference corpora triggered them. Not finding one means nothing:
+             APIs and paid tiers do not stamp, and a mark can simply be cropped away.</p>
           <p>Two more channels are reported as <strong>evidence panels</strong>, shown beside the verdict
              but never mixed into it: a frequency-domain signature specific to Google’s image generators
              (Gemini/Imagen family, measured 0.55–0.70 AUC across surfaces), and provenance metadata —
@@ -267,6 +275,6 @@
   </div>
 </footer>
 
-<script src="app.js?v=7"></script>
+<script src="app.js?v=9"></script>
 </body>
 </html>

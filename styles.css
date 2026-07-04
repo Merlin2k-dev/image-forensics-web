@@ -177,6 +177,10 @@ a { color: var(--color-ink); }
                 font: 400 var(--text-xs)/1.6 var(--font-mono); color: var(--color-muted-dark); }
 .report__strength { font-size: var(--text-sm); color: var(--color-muted-dark); max-width: 48ch; }
 
+.verdict__basis { font: 500 var(--text-sm)/1.5 var(--font-body); color: var(--color-warn-brt);
+                  max-width: 52ch; margin: 0; }
+.report summary.wm-found { color: var(--color-warn-brt); }
+
 /* evidence panels */
 .panels { margin: 0; padding: 0; list-style: none; display: grid; }
 .panels li { display: grid; grid-template-columns: 1fr auto auto; gap: var(--space-sm);

@@ -1,6 +1,14 @@
 {
  "firefly": {
   "verdict": "LIKELY AI-GENERATED",
+  "verdict_basis": "pixel statistics",
+  "watermark": {
+   "checked": [
+    "gemini_v2_diamond_36",
+    "kling_wordmark_30"
+   ],
+   "found": []
+  },
   "input_size": "512x512",
   "score_z": 1.716,
   "real_percentile": 95.7,
@@ -50,6 +58,14 @@
  },
  "nano": {
   "verdict": "INCONCLUSIVE",
+  "verdict_basis": "pixel statistics",
+  "watermark": {
+   "checked": [
+    "gemini_v2_diamond_36",
+    "kling_wordmark_30"
+   ],
+   "found": []
+  },
   "input_size": "512x512",
   "score_z": 0.008,
   "real_percentile": 50.3,

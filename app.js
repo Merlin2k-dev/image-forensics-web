@@ -3,7 +3,7 @@
 
 "use strict";
 
-const API_BASE = "https://merlin2k23-image-forensics.hf.space";
+const API_BASE = ""; // "" = same origin; or e.g. "https://<space>.hf.space"
 
 let apiUp = false;
 (async () => {
@@ -426,6 +426,14 @@ function renderReport(r, source) {
   verdict.appendChild(chip);
   verdict.appendChild(z);
   rep.appendChild(verdict);
+  const wmHit = r.watermark && r.watermark.found && r.watermark.found.length;
+  if (wmHit) {
+    const basis = document.createElement("p");
+    basis.className = "verdict__basis";
+    basis.textContent = "Verdict set by a visible watermark (" + r.watermark.found[0].mark +
+      "). The scale below reflects pixel statistics only.";
+    rep.appendChild(basis);
+  }
 
   const pct = Math.max(0, Math.min(100, Number(r.real_percentile)));
   const scale = document.createElement("div");
@@ -465,6 +473,28 @@ function renderReport(r, source) {
     panels.appendChild(li);
   });
   rep.appendChild(panels);
+
+  if (r.watermark) {
+    const det = document.createElement("details");
+    const sum = document.createElement("summary");
+    const hits = r.watermark.found || [];
+    sum.textContent = "visible watermark — " + (hits.length ? "found" : "none");
+    if (hits.length) { det.open = true; sum.classList.add("wm-found"); }
+    const p = document.createElement("p");
+    if (hits.length) {
+      const h = hits[0];
+      p.textContent = "A mark matching the " + h.mark + " was found at its documented position (" +
+        h.corner + "), correlation " + Number(h.score).toFixed(3) + " against a threshold of " +
+        Number(h.threshold).toFixed(3) + ". A visible watermark is strong evidence the image came from " +
+        h.generator + ". Absence of a watermark never means an image is real: APIs and paid tiers do not stamp.";
+    } else {
+      p.textContent = "No known generator watermark at its documented position (checked: " +
+        (r.watermark.checked || []).join(", ") + "). This means nothing on its own: most AI images " +
+        "come from APIs and paid tiers that never stamp, and visible marks can be cropped away.";
+    }
+    det.append(sum, p);
+    rep.appendChild(det);
+  }
 
   if (r.provenance) {
     const det = document.createElement("details");
