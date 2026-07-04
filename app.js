@@ -6,16 +6,19 @@
 const API_BASE = ""; // "" = same origin; or e.g. "https://<space>.hf.space"
 
 let apiUp = false;
-(async () => {
+
+async function probeApi(timeoutMs) {
   try {
     const ctl = new AbortController();
-    const t = setTimeout(() => ctl.abort(), 4000);
+    const t = setTimeout(() => ctl.abort(), timeoutMs || 4000);
     const r = await fetch(API_BASE + "/health", { signal: ctl.signal });
     clearTimeout(t);
     apiUp = r.ok;
   } catch { apiUp = false; }
   if (apiUp) setState("ready · live");
-})();
+  return apiUp;
+}
+probeApi(4000);
 
 /* analyzer */
 
@@ -154,6 +157,7 @@ function extractDragUrl(dt) {
 }
 
 async function handleUrl(url) {
+  if (!apiUp) await probeApi(6000);
   if (!apiUp) {
     showNotice("Dragging an image from another website needs the scoring service, which " +
       "isn\u2019t connected right now. Save the image and upload the file, or load a demo report.", true);
@@ -309,6 +313,7 @@ async function handleFile(file) {
   const canvas = cropAndLuma(bitmap);
   const runlog = runlogTemplate(canvas);
   body.appendChild(runlog);
+  if (!apiUp) await probeApi(6000);
   const stages = animateStages(runlog, apiUp ? { stepMs: 320 } : { stepMs: 320, upTo: 3 });
 
   if (!apiUp) {
