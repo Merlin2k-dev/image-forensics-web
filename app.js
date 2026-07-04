@@ -3,7 +3,10 @@
 
 "use strict";
 
-const API_BASE = ""; // "" = same origin; or e.g. "https://<space>.hf.space"
+// on the static deployment the scoring service lives on its own host;
+// self-hosted copies serve the API from the same origin
+const API_BASE = /(^|\.)image-forensics\.tech$|(^|\.)github\.io$/.test(location.hostname)
+  ? "https://merlin2k23-image-forensics.hf.space" : "";
 
 let apiUp = false;
 
