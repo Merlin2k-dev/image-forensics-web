@@ -12,8 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tokens.css?v=12">
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="tokens.css?v=13">
+<link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body>
 
@@ -77,7 +77,7 @@
       <div><b>27&thinsp;+&thinsp;1</b><span>hand-crafted measurements, plus a watermark check</span></div>
       <div><b>18</b><span>feature families rejected by controls</span></div>
       <div><b>29</b><span>modern generators evaluated</span></div>
-      <div><b>&lt;9%</b><span>real photos ever misflagged as AI</span></div>
+      <div><b>&lt;9%</b><span>of in-scope real photos flagged AI (news 8.8%, held-out)</span></div>
     </div>
   </section>
 
@@ -104,10 +104,11 @@
         </li>
         <li data-n="4.0">
           <h3>Verdict</h3>
-          <p>The score lands on a scale built from real photos from several independent sources. Beyond
+          <p>The score lands on a scale built from 2,250 real photos (750 LAION + 1,500 DOCCI). Beyond
              the 95th percentile of real photos: likely AI-generated. Past the 80th: leaning
              AI-generated. Well inside the envelope: likely real. Anywhere between: inconclusive,
-             said plainly.</p>
+             said plainly. About 1 in 5 reference real photos (and ~30% of unseen news photos) land
+             at or above the 80th percentile, so &ldquo;leaning&rdquo; is a weak lean, not an accusation.</p>
         </li>
       </ol>
       <div class="prose">
@@ -159,11 +160,12 @@
              documented positions. Finding one settles the verdict on its own, because the thresholds
              are calibrated so that no clean photo in the reference corpora triggered them. Not finding one means nothing:
              APIs and paid tiers do not stamp, and a mark can simply be cropped away.</p>
-          <p>Two more channels are reported as <strong>evidence panels</strong>, shown beside the verdict
-             but never mixed into it: a frequency-domain signature specific to Google’s image generators
-             (Gemini/Imagen family, measured 0.55–0.70 AUC across surfaces), and provenance metadata —
-             C2PA manifests, IPTC AI markers, generator EXIF tags — which is trivial to strip
-             and therefore never trusted as pixel evidence.</p>
+          <p>One more channel is reported as an <strong>evidence panel</strong>, shown beside the verdict
+             but never mixed into it: provenance metadata — C2PA manifests, IPTC AI markers, generator
+             EXIF tags — which is trivial to strip and therefore never trusted as pixel evidence. (An
+             earlier frequency-domain &ldquo;spectral signature&rdquo; panel was removed after it proved to
+             detect a training-dataset artifact rather than a trait of delivered images; Google and
+             Kling generations are caught by the visible-watermark check, which reads actual stamped pixels.)</p>
         </div>
       </div>
     </div>
@@ -179,8 +181,10 @@
         <p>The numbers are lower — and they are the ones you should expect on your own images, not a
            lab-only best case. Where current methods genuinely cannot tell, the verdict is
            “inconclusive” rather than a confident guess.</p>
-        <p>One more number matters for trust: when the verdict says likely AI-generated, fewer than 9%
-           of real photos ever land there by mistake, held across four independent photo collections.
+        <p>One more number matters for trust: when the verdict says likely AI-generated, the false-alarm
+           rate on real photos is 8.8% on news and 3.6% on DIV2K — the two collections the model never
+           saw — and 4&ndash;7.5% on the two it calibrated on. Unusual real classes such as dashcam frames
+           are out of scope and flagged far more often; see the limitations.
            The full protocol and per-generator tables are in the accompanying dissertation.</p>
       </div>
       <table class="coverage tnum">
@@ -192,7 +196,7 @@
           <tr><td>2022-era generators</td><td class="auc">0.88</td><td class="st">covered</td></tr>
           <tr><td>FLUX / Stable Diffusion lineage</td><td class="auc">0.66–0.82</td><td class="st">covered</td></tr>
           <tr><td>Seedream, Kling, Hunyuan</td><td class="auc">0.55–0.65</td><td class="st">partial</td></tr>
-          <tr><td>Google family (Gemini, Imagen)</td><td class="auc">0.55–0.70</td><td class="st">evidence panel</td></tr>
+          <tr><td>Gemini / nano-banana, Kling</td><td class="auc">—</td><td class="st">visible watermark</td></tr>
           <tr><td>GPT-Image, Midjourney v7, Qwen, GLM</td><td class="auc">~0.5</td><td class="st">abstains</td></tr>
         </tbody>
       </table>
@@ -266,7 +270,7 @@
 <footer class="foot wrap">
   <p class="foot__line foot__flip" id="foot-flip" tabindex="0" role="button" aria-pressed="false">
     <span class="foot__claim">Measured, not guessed.</span>
-    <span class="foot__proof tnum">AUC tested across 29 generators · &lt;9% false alarms · 27 measurements · 0 hidden layers</span>
+    <span class="foot__proof tnum">AUC tested across 29 generators · ≤9% false alarms (in-scope, held-out) · 27 measurements · 0 hidden layers</span>
   </p>
   <div class="foot__meta">
     <a class="nav__brand" href="#top">image<span class="tick">-</span>forensics</a>
@@ -275,6 +279,6 @@
   </div>
 </footer>
 
-<script src="app.js?v=12"></script>
+<script src="app.js?v=13"></script>
 </body>
 </html>

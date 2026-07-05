@@ -39,7 +39,6 @@ const STAGES = [
   "sensor-physics features · 2",
   "inversion-residual features · 2",
   "self-consistency features · 5",
-  "google-family spectral panel",
   "provenance metadata scan",
   "score against real-photo reference",
 ];

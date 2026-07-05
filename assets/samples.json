@@ -1,116 +1,102 @@
 {
- "firefly": {
-  "verdict": "LIKELY AI-GENERATED",
-  "verdict_basis": "pixel statistics",
-  "watermark": {
-   "checked": [
-    "gemini_v2_diamond_36",
-    "kling_wordmark_30"
-   ],
-   "found": []
+  "firefly": {
+    "verdict": "LIKELY AI-GENERATED",
+    "verdict_basis": "pixel statistics",
+    "watermark": {
+      "checked": [
+        "gemini_v2_diamond_36",
+        "kling_wordmark_30"
+      ],
+      "found": []
+    },
+    "input_size": "512x512",
+    "score_z": 1.716,
+    "real_percentile": 95.7,
+    "strength_text": "Pixel statistics are more anomalous than 96% of real photos in the reference corpora.",
+    "bands": {
+      "real_at_or_below": -0.524,
+      "leaning_at_or_above": 0.841,
+      "ai_at_or_above": 1.641
+    },
+    "n_crops": 1,
+    "panels": [
+      {
+        "channel": "v2",
+        "title": "Generative-decoder artifacts",
+        "z": 1.72,
+        "signal": "moderate",
+        "explanation": "Measures upsampling-grid fingerprints, spectral shape, noise structure and local self-consistency that diffusion-family generators leave in the pixels."
+      },
+      {
+        "channel": "env",
+        "title": "Distance from the real-photo envelope",
+        "z": -0.87,
+        "signal": "none",
+        "explanation": "Measures how far the image's statistics sit from the envelope of genuine camera photos; frontier generators can be flagged for being unnaturally smooth/consistent."
+      }
+    ],
+    "provenance": {
+      "verdict": "neutral",
+      "strength": "none",
+      "detail": "No provenance metadata found. This is uninformative: metadata is routinely stripped by social media and editing tools, so its absence is NOT evidence the image is real.",
+      "checked": [
+        "c2pa",
+        "xmp",
+        "exif",
+        "png_text"
+      ],
+      "evidence": []
+    },
+    "limitations": "Trained on specific generator families; strongest on FLUX/Stable-Diffusion-lineage images, weaker on the newest closed-lab generators (GPT-Image, Midjourney, Qwen, GLM). Detects generator artifacts as delivered by the generating service; social-media re-processing/laundering degrades detection. Unusual real photo classes (e.g. dashcam or heavily compressed camera frames) may be flagged as anomalous. Treat as forensic evidence, not definitive proof. Provenance metadata, when present, is reported separately and can be stripped or forged."
   },
-  "input_size": "512x512",
-  "score_z": 1.716,
-  "real_percentile": 95.7,
-  "strength_text": "Pixel statistics are more anomalous than 96% of real photos in the reference corpora.",
-  "bands": {
-   "real_at_or_below": -0.524,
-   "leaning_at_or_above": 0.841,
-   "ai_at_or_above": 1.641
-  },
-  "n_crops": 1,
-  "panels": [
-   {
-    "channel": "v2",
-    "title": "Generative-decoder artifacts",
-    "z": 1.72,
-    "signal": "moderate",
-    "explanation": "Measures upsampling-grid fingerprints, spectral shape, noise structure and local self-consistency that diffusion-family generators leave in the pixels."
-   },
-   {
-    "channel": "env",
-    "title": "Distance from the real-photo envelope",
-    "z": -0.87,
-    "signal": "none",
-    "explanation": "Measures how far the image's statistics sit from the envelope of genuine camera photos; frontier generators can be flagged for being unnaturally smooth/consistent."
-   },
-   {
-    "channel": "sid",
-    "title": "Google-family spectral signature",
-    "z": -0.4,
-    "signal": "none",
-    "explanation": "Looks for a frequency-domain spectral pattern consistent with Google's image generators (Gemini/Imagen family, plausibly their SynthID watermarking). Scoped: fires only on that family; strength varies by source (measured 0.55-0.70 AUC across surfaces); removable by heavy re-processing."
-   }
-  ],
-  "provenance": {
-   "verdict": "neutral",
-   "strength": "none",
-   "detail": "No provenance metadata found. This is uninformative: metadata is routinely stripped by social media and editing tools, so its absence is NOT evidence the image is real.",
-   "checked": [
-    "c2pa",
-    "xmp",
-    "exif",
-    "png_text"
-   ],
-   "evidence": []
-  },
-  "limitations": "Trained on specific generator families; strongest on FLUX/Stable-Diffusion-lineage images, weaker on the newest closed-lab generators (GPT-Image, Midjourney, Qwen, GLM). Detects generator artifacts as delivered by the generating service; social-media re-processing/laundering degrades detection. Unusual real photo classes (e.g. dashcam or heavily compressed camera frames) may be flagged as anomalous. Treat as forensic evidence, not definitive proof. Provenance metadata, when present, is reported separately and can be stripped or forged."
- },
- "nano": {
-  "verdict": "INCONCLUSIVE",
-  "verdict_basis": "pixel statistics",
-  "watermark": {
-   "checked": [
-    "gemini_v2_diamond_36",
-    "kling_wordmark_30"
-   ],
-   "found": []
-  },
-  "input_size": "512x512",
-  "score_z": 0.008,
-  "real_percentile": 50.3,
-  "strength_text": "Pixel statistics are more anomalous than 50% of real photos in the reference corpora.",
-  "bands": {
-   "real_at_or_below": -0.524,
-   "leaning_at_or_above": 0.841,
-   "ai_at_or_above": 1.641
-  },
-  "n_crops": 1,
-  "panels": [
-   {
-    "channel": "v2",
-    "title": "Generative-decoder artifacts",
-    "z": 0.01,
-    "signal": "weak",
-    "explanation": "Measures upsampling-grid fingerprints, spectral shape, noise structure and local self-consistency that diffusion-family generators leave in the pixels."
-   },
-   {
-    "channel": "env",
-    "title": "Distance from the real-photo envelope",
-    "z": 0.01,
-    "signal": "weak",
-    "explanation": "Measures how far the image's statistics sit from the envelope of genuine camera photos; frontier generators can be flagged for being unnaturally smooth/consistent."
-   },
-   {
-    "channel": "sid",
-    "title": "Google-family spectral signature",
-    "z": 3.25,
-    "signal": "strong",
-    "explanation": "Looks for a frequency-domain spectral pattern consistent with Google's image generators (Gemini/Imagen family, plausibly their SynthID watermarking). Scoped: fires only on that family; strength varies by source (measured 0.55-0.70 AUC across surfaces); removable by heavy re-processing."
-   }
-  ],
-  "provenance": {
-   "verdict": "neutral",
-   "strength": "none",
-   "detail": "No provenance metadata found. This is uninformative: metadata is routinely stripped by social media and editing tools, so its absence is NOT evidence the image is real.",
-   "checked": [
-    "c2pa",
-    "xmp",
-    "exif",
-    "png_text"
-   ],
-   "evidence": []
-  },
-  "limitations": "Trained on specific generator families; strongest on FLUX/Stable-Diffusion-lineage images, weaker on the newest closed-lab generators (GPT-Image, Midjourney, Qwen, GLM). Detects generator artifacts as delivered by the generating service; social-media re-processing/laundering degrades detection. Unusual real photo classes (e.g. dashcam or heavily compressed camera frames) may be flagged as anomalous. Treat as forensic evidence, not definitive proof. Provenance metadata, when present, is reported separately and can be stripped or forged."
- }
+  "nano": {
+    "verdict": "INCONCLUSIVE",
+    "verdict_basis": "pixel statistics",
+    "watermark": {
+      "checked": [
+        "gemini_v2_diamond_36",
+        "kling_wordmark_30"
+      ],
+      "found": []
+    },
+    "input_size": "512x512",
+    "score_z": 0.008,
+    "real_percentile": 50.3,
+    "strength_text": "Pixel statistics are more anomalous than 50% of real photos in the reference corpora.",
+    "bands": {
+      "real_at_or_below": -0.524,
+      "leaning_at_or_above": 0.841,
+      "ai_at_or_above": 1.641
+    },
+    "n_crops": 1,
+    "panels": [
+      {
+        "channel": "v2",
+        "title": "Generative-decoder artifacts",
+        "z": 0.01,
+        "signal": "weak",
+        "explanation": "Measures upsampling-grid fingerprints, spectral shape, noise structure and local self-consistency that diffusion-family generators leave in the pixels."
+      },
+      {
+        "channel": "env",
+        "title": "Distance from the real-photo envelope",
+        "z": 0.01,
+        "signal": "weak",
+        "explanation": "Measures how far the image's statistics sit from the envelope of genuine camera photos; frontier generators can be flagged for being unnaturally smooth/consistent."
+      }
+    ],
+    "provenance": {
+      "verdict": "neutral",
+      "strength": "none",
+      "detail": "No provenance metadata found. This is uninformative: metadata is routinely stripped by social media and editing tools, so its absence is NOT evidence the image is real.",
+      "checked": [
+        "c2pa",
+        "xmp",
+        "exif",
+        "png_text"
+      ],
+      "evidence": []
+    },
+    "limitations": "Trained on specific generator families; strongest on FLUX/Stable-Diffusion-lineage images, weaker on the newest closed-lab generators (GPT-Image, Midjourney, Qwen, GLM). Detects generator artifacts as delivered by the generating service; social-media re-processing/laundering degrades detection. Unusual real photo classes (e.g. dashcam or heavily compressed camera frames) may be flagged as anomalous. Treat as forensic evidence, not definitive proof. Provenance metadata, when present, is reported separately and can be stripped or forged."
+  }
 }
