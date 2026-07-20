@@ -53,8 +53,8 @@ async function loadSamples() {
 }
 
 const SAMPLE_META = {
-  firefly: { name: "Adobe Firefly — factory floor scene", img: "assets/sample-firefly.jpg" },
-  nano: { name: "Google nano-banana — genuine output", img: "assets/sample-nano.jpg" },
+  firefly: { name: "Adobe Firefly, factory floor scene", img: "assets/sample-firefly.jpg" },
+  nano: { name: "Google nano-banana, genuine output", img: "assets/sample-nano.jpg" },
 };
 
 function setState(text) { stateChip.textContent = text; }
@@ -82,7 +82,7 @@ function dropzoneTemplate() {
   label.innerHTML = `
     <span class="dropzone__mark" aria-hidden="true"></span>
     <span>Drop an image, or browse</span>
-    <span class="dropzone__hint">JPEG · PNG · WebP — short side ≥ 512 px<br>drag one straight from another website, too*</span>`;
+    <span class="dropzone__hint">JPEG · PNG · WebP, short side ≥ 512 px<br>drag one straight from another website, too*</span>`;
   const input = document.createElement("input");
   input.type = "file";
   input.id = "file-input";
@@ -96,7 +96,7 @@ function dropzoneTemplate() {
 function samplesTemplate() {
   const div = document.createElement("div");
   div.className = "samples";
-  div.innerHTML = `<span class="label">demo — real reports from real AI images:</span>`;
+  div.innerHTML = `<span class="label">demo: real reports from real AI images</span>`;
   for (const key of ["firefly", "nano"]) {
     const b = document.createElement("button");
     b.className = "chip";
@@ -204,8 +204,8 @@ async function handleUrl(url) {
     renderReport(report, { name: url });
   } catch (err) {
     setState("ready");
-    showNotice("The image couldn\u2019t be analyzed from that site (" + err.message + ") " +
-      "\u2014 some sites block downloads. Save the image and upload the file instead.", true);
+    showNotice("The image couldn\u2019t be analyzed from that site (" + err.message + "). " +
+      "Some sites block downloads. Save the image and upload the file instead.", true);
     body.appendChild(samplesTemplate());
   }
 }
@@ -227,7 +227,7 @@ function cropAndLuma(imgBitmap) {
   }
   ctx.putImageData(px, 0, 0);
   c.setAttribute("role", "img");
-  c.setAttribute("aria-label", "The 512 px center crop in luminance — exactly what the model reads");
+  c.setAttribute("aria-label", "The 512 px center crop in luminance: exactly what the model reads");
   return c;
 }
 
@@ -305,8 +305,8 @@ async function handleFile(file) {
     return;
   }
   if (Math.min(bitmap.width, bitmap.height) < 512) {
-    showNotice(`This image is ${bitmap.width} × ${bitmap.height}. The short side must be at least 512 px — ` +
-      "the model never upscales, because upscaling destroys the statistics it measures.", true);
+    showNotice(`This image is ${bitmap.width} × ${bitmap.height}. The short side must be at least 512 px. ` +
+      "The model never upscales, because upscaling destroys the statistics it measures.", true);
     return;
   }
 
@@ -322,7 +322,7 @@ async function handleFile(file) {
     await stages.play();
     setState("ready");
     showNotice(
-      "Preprocessing done \u2014 the preview is exactly what the model reads: the 512 px center crop, " +
+      "Preprocessing done. The preview is exactly what the model reads: the 512 px center crop, " +
       "in luminance. The 27 measurements and the scoring run server-side, and the scoring service " +
       "isn\u2019t connected yet. Run the pipeline locally from the GitHub repo, or load a demo " +
       "report below to see a real verdict.", false);
@@ -347,7 +347,7 @@ async function handleFile(file) {
   } catch (err) {
     setState("error");
     showNotice("The analysis request failed (" + err.message + "). " +
-      "The service may be waking up — try again in a few seconds.", true);
+      "The service may be waking up; try again in a few seconds.", true);
     body.appendChild(samplesTemplate());
   }
 }
@@ -403,7 +403,7 @@ function renderReport(r, source) {
   if (!r || typeof r.score_z !== "number" && typeof r.score_z !== "string" || r.verdict === "UNSUPPORTED" || r.verdict === "ERROR") {
     setState("ready");
     showNotice("The pipeline couldn\u2019t score this image" +
-      (r && r.verdict === "UNSUPPORTED" ? " \u2014 it doesn\u2019t meet the 512 px minimum after decoding." : ".") +
+      (r && r.verdict === "UNSUPPORTED" ? ": it doesn\u2019t meet the 512 px minimum after decoding." : ".") +
       " Try another image, or load a demo report.", true);
     body.appendChild(samplesTemplate());
     return;
@@ -417,7 +417,7 @@ function renderReport(r, source) {
   if (source && source.sample) {
     const tag = document.createElement("p");
     tag.className = "report__meta";
-    tag.textContent = "example — a real report produced by this pipeline on a known AI image (" + source.name + ")";
+    tag.textContent = "example: a real report produced by this pipeline on a known AI image (" + source.name + ")";
     rep.appendChild(tag);
   }
 
@@ -485,7 +485,7 @@ function renderReport(r, source) {
     const det = document.createElement("details");
     const sum = document.createElement("summary");
     const hits = r.watermark.found || [];
-    sum.textContent = "visible watermark — " + (hits.length ? "found" : "none");
+    sum.textContent = "visible watermark: " + (hits.length ? "found" : "none");
     if (hits.length) { det.open = true; sum.classList.add("wm-found"); }
     const p = document.createElement("p");
     if (hits.length) {
@@ -506,7 +506,7 @@ function renderReport(r, source) {
   if (r.provenance) {
     const det = document.createElement("details");
     const sum = document.createElement("summary");
-    sum.textContent = "provenance metadata — " + r.provenance.verdict;
+    sum.textContent = "provenance metadata: " + r.provenance.verdict;
     const p = document.createElement("p");
     p.textContent = r.provenance.detail + " Checked: " + (r.provenance.checked || []).join(", ") + ".";
     det.append(sum, p);
@@ -581,7 +581,7 @@ async function downloadPdf(r, source, btn) {
 function downloadReport(r, source) {
   const { substrate_b64, ...clean } = r;
   const payload = {
-    tool: "image-forensics — white-box AI-image detector",
+    tool: "image-forensics: white-box AI-image detector",
     source: "https://github.com/Merlin2k-dev/ai-image-forensics",
     generated: new Date().toISOString(),
     input: source ? source.name : "uploaded image",

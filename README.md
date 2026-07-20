@@ -1,8 +1,8 @@
-# image-forensics — web UI
+# image-forensics web UI
 
 Static front end for my white-box AI-image detector. Upload an image and the page
-returns a graded verdict — likely AI-generated, leaning AI-generated, inconclusive,
-or likely real — with the evidence behind it shown panel by panel, plus a downloadable
+returns a graded verdict (likely AI-generated, leaning AI-generated, inconclusive,
+or likely real) with the evidence behind it shown panel by panel, plus a downloadable
 PDF report.
 
 The detector itself lives in

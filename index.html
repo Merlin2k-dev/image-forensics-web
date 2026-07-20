@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://merlin2k23-image-forensics.hf.space; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <title>Image Forensics</title>
-<meta name="description" content="Upload an image and get one of three verdicts — likely AI-generated, likely real, or inconclusive — with every measurement behind the answer shown in plain English. 27 hand-crafted features, logistic regression, no neural networks.">
+<meta name="description" content="Upload an image and get one of three verdicts: likely AI-generated, likely real, or inconclusive. Every measurement behind the answer is shown in plain English. 27 hand-crafted features, logistic regression, no neural networks.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='4' width='24' height='24' rx='3' fill='none' stroke='%233355cc' stroke-width='3'/%3E%3Crect x='12' y='12' width='8' height='8' fill='%233355cc'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,10 +36,10 @@
   <section class="wrap hero">
     <div>
       <h1 class="hero__title reveal" style="--i:0"><span>27 measurements.</span> <span>One honest verdict.</span></h1>
-      <p class="hero__lede reveal" style="--i:1">Upload a photo and it gets measured — decoder upsampling
-        grids, spectral shape, missing camera-sensor physics, local self-consistency — then answered with
-        one of three verdicts: <strong>likely AI-generated</strong>, <strong>likely real</strong>, or an
-        honest <strong>inconclusive</strong>. Every number behind the answer is shown.
+      <p class="hero__lede reveal" style="--i:1">Upload a photo and it gets measured: decoder upsampling
+        grids, spectral shape, missing camera-sensor physics, local self-consistency. Then it gets
+        one of three verdicts: <strong>likely AI-generated</strong>, <strong>likely real</strong>, or,
+        when the evidence isn't there, <strong>inconclusive</strong>. Every number behind the answer is shown.
         No neural networks. Nothing hidden.</p>
       <div class="hero__ctas reveal" style="--i:2">
         <button class="btn btn--outline" data-sample="firefly">Load a demo report</button>
@@ -58,13 +58,13 @@
         <label class="dropzone" id="dropzone">
           <span class="dropzone__mark" aria-hidden="true"></span>
           <span>Drop an image, or browse</span>
-          <span class="dropzone__hint">JPEG · PNG · WebP — short side ≥ 512 px<br>drag one straight from another website, too*</span>
+          <span class="dropzone__hint">JPEG · PNG · WebP, short side ≥ 512 px<br>drag one straight from another website, too*</span>
           <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp">
         </label>
         <p class="analyzer__note">* dragged images are often resized and re-compressed by the site
            serving them. For the most reliable verdict, download the original image and upload the file.</p>
         <div class="samples">
-          <span class="label">demo — real reports from real AI images:</span>
+          <span class="label">demo: real reports from real AI images</span>
           <button class="chip" data-sample="firefly">Demo · Adobe Firefly</button>
           <button class="chip" data-sample="nano">Demo · Google nano-banana</button>
         </div>
@@ -88,8 +88,8 @@
         <li data-n="1.0">
           <h3>Normalize</h3>
           <p>Center-crop to 512 px and re-encode to a fixed JPEG substrate, so every image is judged on
-             identical footing. Images smaller than 512 px are rejected, not upscaled — upscaling would
-             destroy the statistics being measured.</p>
+             identical footing. Images smaller than 512 px are rejected instead of upscaled, because
+             upscaling would destroy the statistics being measured.</p>
         </li>
         <li data-n="2.0">
           <h3>Measure</h3>
@@ -100,7 +100,7 @@
         <li data-n="3.0">
           <h3>Score</h3>
           <p>A logistic regression turns the measurements into a single score. The model was trained once
-             and frozen — it is never retrained to flatter a benchmark.</p>
+             and frozen; it is never retrained to flatter a benchmark.</p>
         </li>
         <li data-n="4.0">
           <h3>Verdict</h3>
@@ -118,13 +118,14 @@
         <p>During development, every candidate measurement had to pass a control test: given two
            collections of <em>only real photos</em> from two different sources, it must not be able to
            tell them apart. A clue that separates them is reading compression history and website
-           plumbing — the picture frame — rather than anything about AI — the painting.</p>
+           plumbing (the picture frame) rather than anything about AI (the painting).</p>
         <p><strong>Eighteen feature families failed that control and were thrown out,</strong> several of
            them with benchmark scores far better than the features I kept. They are published with their
            rejection reasons in the
            <a class="link" href="https://github.com/Merlin2k-dev/ai-image-forensics/tree/main/experiments/rejected_features">experiments folder</a>.</p>
         <p>That is also why the verdict does not care where your image has been. WhatsApp, screenshots,
-           ten years on a hard drive — the clues it uses live in the pixels, not in the file's history.
+           ten years on a hard drive: none of it matters, because the clues it uses live in the pixels,
+           not in the file's history.
            The longer version, with the art-expert analogy, is in
            <a class="link" href="https://github.com/Merlin2k-dev/ai-image-forensics/blob/main/docs/how-it-works.md">how-it-works</a>.</p>
       </div>
@@ -151,7 +152,7 @@
           </tbody>
         </table>
         <div class="prose">
-          <p>All 27 measurements read the <strong>luminance</strong> of the image — the grayscale
+          <p>All 27 measurements read the <strong>luminance</strong> of the image, the grayscale
              structure where generator artifacts live. Color statistics were implemented and tested too,
              as four separate feature families; every one of them turned out to fingerprint the source
              pipeline instead of the generator, and they were rejected.</p>
@@ -161,8 +162,8 @@
              are calibrated so that no clean photo in the reference corpora triggered them. Not finding one means nothing:
              APIs and paid tiers do not stamp, and a mark can simply be cropped away.</p>
           <p>One more channel is reported as an <strong>evidence panel</strong>, shown beside the verdict
-             but never mixed into it: provenance metadata — C2PA manifests, IPTC AI markers, generator
-             EXIF tags — which is trivial to strip and therefore never trusted as pixel evidence. (An
+             but never mixed into it: provenance metadata (C2PA manifests, IPTC AI markers, generator
+             EXIF tags), which is trivial to strip and therefore never trusted as pixel evidence. (An
              earlier frequency-domain &ldquo;spectral signature&rdquo; panel was removed after it proved to
              detect a training-dataset artifact rather than a trait of delivered images; Google and
              Kling generations are caught by the visible-watermark check, which reads actual stamped pixels.)</p>
@@ -178,12 +179,12 @@
         <p>Most detectors advertise 95%+ accuracy, measured on images similar to their training data.
            <strong>This one is measured the hard way on purpose:</strong> trained once, then evaluated
            only on photos and generators from sources it has never seen.</p>
-        <p>The numbers are lower — and they are the ones you should expect on your own images, not a
+        <p>The numbers are lower, and they are the ones you should expect on your own images, not a
            lab-only best case. Where current methods genuinely cannot tell, the verdict is
            “inconclusive” rather than a confident guess.</p>
         <p>One more number matters for trust: when the verdict says likely AI-generated, the false-alarm
-           rate on real photos is 8.8% on news and 3.6% on DIV2K — the two collections the model never
-           saw — and 4&ndash;7.5% on the two it calibrated on. Unusual real classes such as dashcam frames
+           rate on real photos is 8.8% on news and 3.6% on DIV2K (the two collections the model never
+           saw) and 4 to 7.5% on the two it calibrated on. Unusual real classes such as dashcam frames
            are out of scope and flagged far more often; see the limitations.
            The full protocol and per-generator tables are in the accompanying dissertation.</p>
       </div>
@@ -194,9 +195,9 @@
         </thead>
         <tbody>
           <tr><td>2022-era generators</td><td class="auc">0.88</td><td class="st">covered</td></tr>
-          <tr><td>FLUX / Stable Diffusion lineage</td><td class="auc">0.66–0.82</td><td class="st">covered</td></tr>
-          <tr><td>Seedream, Kling, Hunyuan</td><td class="auc">0.55–0.65</td><td class="st">partial</td></tr>
-          <tr><td>Gemini / nano-banana, Kling</td><td class="auc">—</td><td class="st">visible watermark</td></tr>
+          <tr><td>FLUX / Stable Diffusion lineage</td><td class="auc">0.66-0.82</td><td class="st">covered</td></tr>
+          <tr><td>Seedream, Kling, Hunyuan</td><td class="auc">0.55-0.65</td><td class="st">partial</td></tr>
+          <tr><td>Gemini / nano-banana, Kling</td><td class="auc">n/a</td><td class="st">visible watermark</td></tr>
           <tr><td>GPT-Image, Midjourney v7, Qwen, GLM</td><td class="auc">~0.5</td><td class="st">abstains</td></tr>
         </tbody>
       </table>
@@ -222,7 +223,8 @@
           <p>Because sometimes the honest answer is “I can’t tell”, and I would rather say that than
              guess. Either the image came from one of the newest generators that current methods cannot
              detect from pixels alone, or it has been re-compressed so many times that the evidence is
-             destroyed. The verdict degrades into “I don’t know” — never into a confident wrong answer.</p>
+             destroyed. When that happens the verdict degrades into “I don’t know”, never into a
+             confident wrong answer.</p>
         </div></div>
       </details>
       <details>
@@ -237,7 +239,7 @@
         <summary>Other tools advertise 95%+. Why are these numbers lower?</summary>
         <div class="faq__a"><div>
           <p>Because the measurement is different, not the ambition. Numbers measured on data similar to
-             the training set reward memorizing incidental details — which website the photos came from,
+             the training set reward memorizing incidental details: which website the photos came from,
              how they were compressed. This model is scored only on sources it has never seen, and every
              feature had to prove it reads the image rather than the image’s history. Independent studies
              keep finding the same gap: detectors advertising 99% drop to roughly 78% on in-the-wild
@@ -245,20 +247,20 @@
         </div></div>
       </details>
       <details>
-        <summary>Does it matter where my image has been — WhatsApp, screenshots, editing?</summary>
+        <summary>Does it matter where my image has been (WhatsApp, screenshots, editing)?</summary>
         <div class="faq__a"><div>
           <p>Where it has been: no. The features were selected so that compression history, resizing, and
              the site an image passed through cannot push the verdict either way. Very heavy processing
-             can erase the evidence itself — in which case you get “inconclusive”, not a wrong answer.</p>
+             can erase the evidence itself; in that case you get “inconclusive”, not a wrong answer.</p>
         </div></div>
       </details>
       <details>
         <summary>Can it be fooled?</summary>
         <div class="faq__a"><div>
           <p>Yes, and the page says so. Determined laundering erases pixel evidence, metadata can always
-             be stripped, and the newest closed-lab generators are largely undetectable from pixels alone
-             — for every tool, not just this one. Treat the output as forensic evidence that supports a
-             judgment, not as a verdict machine.
+             be stripped, and the newest closed-lab generators are largely undetectable from pixels
+             alone. That holds for every tool on the market, this one included. Treat the output as
+             forensic evidence that supports a judgment rather than as a verdict machine.
              More in the <a class="link" href="https://github.com/Merlin2k-dev/ai-image-forensics/blob/main/docs/faq.md">full FAQ</a>.</p>
         </div></div>
       </details>
